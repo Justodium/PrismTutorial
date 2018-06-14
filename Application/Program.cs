@@ -14,27 +14,39 @@ using Microsoft.Practices.Unity;
 
 namespace Application
 {
+  class CalculatorBootstrapper : UnityBootstrapper
+  {
+    protected override IModuleCatalog CreateModuleCatalog()
+    {
+      return new ConfigurationModuleCatalog();
+    }
+  }
+
   class Program
   {
     static void Main(string[] args)
     {
-      IUnityContainer container = new UnityContainer();
-        //.LoadConfiguration();
+      //IUnityContainer container = new UnityContainer();
+      //.LoadConfiguration();
 
-      container.RegisterInstance<IServiceLocator>(new UnityServiceLocatorAdapter(container));
+      //container.RegisterInstance<IServiceLocator>(new UnityServiceLocatorAdapter(container));
 
-      TextLogger logger = new TextLogger();
-      container.RegisterInstance<ILoggerFacade>(logger);
-      container.RegisterType<IModuleInitializer, ModuleInitializer>();
-      ConfigurationModuleCatalog catalog = new ConfigurationModuleCatalog();
-      container.RegisterInstance<IModuleCatalog>(catalog);
-      container.RegisterType<IModuleManager, ModuleManager>();
+      ////ICalculaterReplLoop calculaterReplLoop = container.Resolve<ICalculaterReplLoop>();
+      ////calculaterReplLoop.Run();
 
-      IModuleManager manager = container.Resolve<IModuleManager>();
-      manager.Run();
+      //TextLogger logger = new TextLogger();
+      //container.RegisterInstance<ILoggerFacade>(logger);
+      //container.RegisterType<IModuleInitializer, ModuleInitializer>();
+      //ConfigurationModuleCatalog catalog = new ConfigurationModuleCatalog();
+      //container.RegisterInstance<IModuleCatalog>(catalog);
+      //container.RegisterType<IModuleManager, ModuleManager>();
 
-      //ICalculaterReplLoop calculaterReplLoop = container.Resolve<ICalculaterReplLoop>();
-      //calculaterReplLoop.Run();
+      //IModuleManager manager = container.Resolve<IModuleManager>();
+      //manager.Run();
+
+      CalculatorBootstrapper bootstrapper = new CalculatorBootstrapper();
+      bootstrapper.Run();
+
     }
   }
 }
